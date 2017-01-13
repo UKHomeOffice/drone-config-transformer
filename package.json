@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "lint": "eslint .",
+    "test": "npm run lint && mocha"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,18 @@
   "bugs": {
     "url": "https://github.com/UKHomeOffice/drone-config-transformer/issues"
   },
-  "homepage": "https://github.com/UKHomeOffice/drone-config-transformer#readme"
+  "homepage": "https://github.com/UKHomeOffice/drone-config-transformer#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mocha": "^3.2.0",
+    "supertest": "^2.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.13.1",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-mocha": "^4.8.0",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.1"
+  }
 }

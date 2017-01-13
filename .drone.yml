@@ -1,0 +1,33 @@
+pipeline:
+
+  my-build:
+    privileged: true
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker build -t signed-commit-check .
+    when:
+      branch: master
+      event: push
+
+  image_to_quay:
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker login -u="ukhomeofficedigital+signed_commit_check" -p=${DOCKER_PASSWORD} quay.io
+      - docker tag signed-commit-check quay.io/ukhomeofficedigital/signed-commit-check:${DRONE_COMMIT_SHA}
+      - docker push quay.io/ukhomeofficedigital/signed-commit-check:${DRONE_COMMIT_SHA}
+    when:
+      branch: master
+      event: push
+
+
+services:
+  dind:
+    image: docker:1.11-dind
+    privileged: true
+    command:
+      - "-s"
+      - "overlay"
